@@ -35,7 +35,7 @@ public struct KUITagAccessibilityElement {
     public var traits: UIAccessibilityTraits
     
     public init(title: String,
-                traits: UIAccessibilityTraits = UIAccessibilityTraitButton) {
+                traits: UIAccessibilityTraits = UIAccessibilityTraits.button) {
         self.title = title
         self.traits = traits
     }
@@ -153,7 +153,7 @@ open class KUITagLabel: UILabel {
         
         let style = NSMutableParagraphStyle()
         style.lineSpacing = lineSpace
-        attr.addAttributes([NSAttributedStringKey.paragraphStyle: style], range: NSMakeRange(0, attr.length))
+        attr.addAttributes([NSAttributedString.Key.paragraphStyle: style], range: NSMakeRange(0, attr.length))
         attributedText = attr
     }
     
@@ -202,7 +202,7 @@ open class KUITagLabel: UILabel {
         
         var elements = [UIAccessibilityElement]()
         attr.enumerateAttributes(in: NSRange(location: 0, length: attr.length), options: []) { (attribute, range, stop) in
-            guard let _ = attribute[NSAttributedStringKey.attachment] as? NSTextAttachment else { return }
+            guard let _ = attribute[NSAttributedString.Key.attachment] as? NSTextAttachment else { return }
             let boundingRect = manager.boundingRect(forGlyphRange: range, in: container)
             let boundingRectInWindowCoordinates = convert(boundingRect, to: nil)
             var boundingRectInScreenCoordinates = window?.convert(boundingRectInWindowCoordinates, to: nil) ?? boundingRectInWindowCoordinates
@@ -218,7 +218,7 @@ open class KUITagLabel: UILabel {
             let element = UIAccessibilityElement(accessibilityContainer: self)
             element.accessibilityFrame = boundingRectInScreenCoordinates
             element.accessibilityLabel = tag.accessibilityElement?.title ?? tag.title
-            element.accessibilityTraits = tag.accessibilityElement?.traits ?? UIAccessibilityTraitButton
+            element.accessibilityTraits = tag.accessibilityElement?.traits ?? UIAccessibilityTraits.button
             elements.append(element)
         }
         
